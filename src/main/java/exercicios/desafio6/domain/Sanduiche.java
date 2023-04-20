@@ -1,15 +1,10 @@
 package exercicios.desafio6.domain;
 
-import exercicios.desafio6.domain.utils.enums.TipoDePao;
+import exercicios.desafio6.utils.enums.TipoDePao;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Optional;
 
 
@@ -50,8 +45,6 @@ public class Sanduiche {
         this.picles = picles;
     }
 
-    public Sanduiche(Optional<Sanduiche> sanduicheOptional) {
-    }
 
     public String getChaveFiltragem() {
         return chaveFiltragem;

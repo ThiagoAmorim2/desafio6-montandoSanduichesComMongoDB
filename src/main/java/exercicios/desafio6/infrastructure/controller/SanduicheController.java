@@ -39,11 +39,11 @@ public class SanduicheController {
         sanduicheService.excluirSanduiche(chaveParticao);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{chaveParticao}")
-    public ResponseEntity<Sanduiche> alterar(@PathVariable String chaveParticao,
+    public Sanduiche alterar(@PathVariable String chaveParticao,
                                              @RequestBody Sanduiche sanduiche){
-        sanduicheService.alterarSanduiche(chaveParticao, sanduiche);
-        return ResponseEntity.accepted().build();
+        return sanduicheService.alterarSanduiche(chaveParticao, sanduiche);
     }
 
 }

@@ -1,4 +1,4 @@
-package exercicios.desafio6.domain.utils.enums;
+package exercicios.desafio6.utils.enums;
 
 public enum TipoDePao {
     BRIOCHE("brioche"),
