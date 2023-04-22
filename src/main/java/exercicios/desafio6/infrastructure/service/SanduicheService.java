@@ -1,6 +1,7 @@
 package exercicios.desafio6.infrastructure.service;
 
 import exercicios.desafio6.domain.Sanduiche;
+import exercicios.desafio6.domain.dto.SanduicheDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,13 +9,13 @@ import java.util.List;
 @Service
 public interface SanduicheService {
 
-    List<Sanduiche> listarSanduiches();
+    List<SanduicheDto> listarSanduiches();
 
-    Sanduiche buscarSanduiche(String id);
+    SanduicheDto buscarSanduiche(String id);
 
-    Sanduiche criarSanduiche(Sanduiche sanduiche);
+    SanduicheDto criarSanduiche(SanduicheDto sanduicheDto);
 
-    Sanduiche alterarSanduiche(String id, Sanduiche sanduiche);
+    SanduicheDto alterarSanduiche(String id, SanduicheDto sanduiche);
 
     void excluirSanduiche(String id);
 

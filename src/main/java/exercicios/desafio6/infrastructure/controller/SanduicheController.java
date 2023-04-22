@@ -1,6 +1,7 @@
 package exercicios.desafio6.infrastructure.controller;
 
 import exercicios.desafio6.domain.Sanduiche;
+import exercicios.desafio6.domain.dto.SanduicheDto;
 import exercicios.desafio6.infrastructure.service.SanduicheService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,17 @@ public class SanduicheController {
     }
 
     @PostMapping
-    public ResponseEntity<Sanduiche> criar(@RequestBody Sanduiche sanduiche){
-        return ResponseEntity.ok(sanduicheService.criarSanduiche(sanduiche));
+    public ResponseEntity<SanduicheDto> criar(@RequestBody SanduicheDto sanduicheDto){
+        return ResponseEntity.ok(sanduicheService.criarSanduiche(sanduicheDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<Sanduiche>> listar(){
+    public ResponseEntity<List<SanduicheDto>> listar(){
         return ResponseEntity.ok(sanduicheService.listarSanduiches());
     }
 
     @GetMapping("/{chaveParticao}")
-    public ResponseEntity<Sanduiche> buscar(@PathVariable String chaveParticao){
+    public ResponseEntity<SanduicheDto> buscar(@PathVariable String chaveParticao){
         return ResponseEntity.ok(sanduicheService.buscarSanduiche(chaveParticao));
     }
 
@@ -41,9 +42,9 @@ public class SanduicheController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{chaveParticao}")
-    public Sanduiche alterar(@PathVariable String chaveParticao,
-                                             @RequestBody Sanduiche sanduiche){
-        return sanduicheService.alterarSanduiche(chaveParticao, sanduiche);
+    public SanduicheDto alterar(@PathVariable String chaveParticao,
+                                             @RequestBody SanduicheDto sanduicheDto){
+        return sanduicheService.alterarSanduiche(chaveParticao, sanduicheDto);
     }
 
 }

@@ -1,10 +1,12 @@
 package exercicios.desafio6.domain.service;
 
 import exercicios.desafio6.domain.Sanduiche;
+import exercicios.desafio6.domain.dto.SanduicheDto;
 import exercicios.desafio6.domain.repository.SanduicheRepository;
 import exercicios.desafio6.infrastructure.service.SanduicheService;
 import exercicios.desafio6.utils.mapper.SanduicheMapper;
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,22 +25,29 @@ public class SanduicheServiceImpl implements SanduicheService {
     }
 
     @Override
-    public List<Sanduiche> listarSanduiches() {
-        return sanduicheRepository.findAll();
+    public List<SanduicheDto> listarSanduiches() {
+        List<Sanduiche> listaSanduicheModel = sanduicheRepository.findAll();
+        ModelMapper mapper = new ModelMapper();
+        List<SanduicheDto> listaSanduichesDto = mapper.map(listaSanduicheModel, new TypeToken<List<SanduicheDto>>(){}.getType());
+        return listaSanduichesDto;
     }
 
     @Override
-    public Sanduiche buscarSanduiche(String chaveParticao) {
-        return sanduicheRepository.findById(chaveParticao).orElseThrow(() -> new RuntimeException(chaveParticao));
+    public SanduicheDto buscarSanduiche(String chaveParticao) {
+        Sanduiche sanduicheModelLocalizado = sanduicheRepository.findById(chaveParticao).orElseThrow(() -> new RuntimeException(chaveParticao));
+        SanduicheDto sanduicheDtoLocalizado = sanduicheMapper.converterSanduicheEmSanduicheDto(sanduicheModelLocalizado);
+        return sanduicheDtoLocalizado;
     }
 
     @Override
-    public Sanduiche criarSanduiche(Sanduiche sanduiche) {
-        return sanduicheRepository.save(sanduiche);
+    public SanduicheDto criarSanduiche(SanduicheDto sanduicheDto) {
+        Sanduiche sanduiche = sanduicheMapper.converterSanduicheDtoEmSanduiche(sanduicheDto);
+        sanduicheRepository.save(sanduiche);    
+        return sanduicheDto;
     }
 
     @Override
-    public Sanduiche alterarSanduiche(String id, Sanduiche sanduiche) {
+    public SanduicheDto alterarSanduiche(String id, SanduicheDto sanduiche) {
         Optional<Sanduiche> sanduicheOptional = sanduicheRepository.findById(id);
         Sanduiche sanduicheParaAlterar = sanduicheMapper.converterOptionalEmSanduiche(sanduicheOptional);
         sanduicheParaAlterar.setChaveParticao(id);
@@ -50,7 +59,9 @@ public class SanduicheServiceImpl implements SanduicheService {
         sanduicheParaAlterar.setDataAtualizacao(sanduiche.getDataAtualizacao());
         sanduicheParaAlterar.setTipoDePao(sanduiche.getTipoDePao());
         sanduicheParaAlterar.setChaveFiltragem(sanduiche.getChaveFiltragem());
-        return sanduicheRepository.save(sanduicheParaAlterar);
+        sanduicheRepository.save(sanduicheParaAlterar);
+        SanduicheDto sanduicheDtoAlterado = sanduicheMapper.converterSanduicheEmSanduicheDto(sanduicheParaAlterar);
+        return sanduicheDtoAlterado;
     }
 
     @Override
